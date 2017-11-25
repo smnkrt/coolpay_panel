@@ -29,7 +29,7 @@ describe API::Recipients::Create do
     subject.call
   end
 
-  it 'returns a token parsed from API response' do
+  it 'returns recipient data hash with coolpay ID' do
     expect(subject.call).to eq(recipient_hash)
   end
 end
