@@ -13,13 +13,13 @@ describe PaymentParams do
 
   context 'recipient_id missing' do
     let(:recipient_id) { nil }
-    it { expect(subject.to_h).to eq(payment_params) }
+    it { expect(subject.to_h).to eq({}) }
     it { expect(subject.valid?).to eq(false) }
   end
 
   context 'amount missing' do
     let(:amount) { nil }
-    it { expect(subject.to_h).to eq(payment_params) }
+    it { expect(subject.to_h).to eq({}) }
     it { expect(subject.valid?).to eq(false) }
   end
 end

@@ -4,7 +4,11 @@ class PaymentParams
   end
 
   def to_h
-    @payment_params
+    return {} unless valid?
+    {
+      recipient_id: @payment_params[:recipient_id],
+      amount:       Float(@payment_params[:amount])
+    }
   end
 
   def valid?
