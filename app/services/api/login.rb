@@ -3,7 +3,7 @@ require 'httparty'
 module API
   # INFO: performs a login request to Coolpay API
   #       and returns token from API response
-  class Authorize
+  class Login
     def call
       JSON.parse(login_response.body)['token']
     end

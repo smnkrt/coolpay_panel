@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe API::Authorize do
+describe API::Login do
   let(:headers) do
     { 'Content-Type' => 'application/json' }
   end
