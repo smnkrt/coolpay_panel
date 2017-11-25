@@ -37,27 +37,35 @@ describe API::Payments::Verify do
       .with(token) { list_double }
   end
 
+  let(:expected_hash) do
+    { status: status, success: success }
+  end
+
   context 'payment is being processed' do
     let(:payment_id) { 'p3' }
-    it { expect(subject.status).to eq('processing') }
-    it { expect(subject.successful?).to eq(false) }
+    let(:status)     { 'processing' }
+    let(:success)    { false }
+    it { expect(subject.call).to eq(expected_hash) }
   end
 
   context 'payment failed' do
     let(:payment_id) { 'p2' }
-    it { expect(subject.status).to eq('failed') }
-    it { expect(subject.successful?).to eq(false) }
+    let(:status)     { 'failed' }
+    let(:success)    { false }
+    it { expect(subject.call).to eq(expected_hash) }
   end
 
   context 'payment is paid' do
     let(:payment_id) { 'p1' }
-    it { expect(subject.status).to eq('paid') }
-    it { expect(subject.successful?).to eq(true) }
+    let(:status)     { 'paid' }
+    let(:success)    { true }
+    it { expect(subject.call).to eq(expected_hash) }
   end
 
   context 'payment is missing' do
     let(:payment_id) { 'p4' }
-    it { expect(subject.status).to eq('not_found') }
-    it { expect(subject.successful?).to eq(false) }
+    let(:status)     { 'not_found' }
+    let(:success)    { false }
+    it { expect(subject.call).to eq(expected_hash) }
   end
 end

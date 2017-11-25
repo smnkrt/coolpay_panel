@@ -5,17 +5,24 @@ module API::Payments
       @payment_id = payment_id
     end
 
+    def call
+      {
+        status: status,
+        success: success?
+      }
+    end
+
+    private
+
     def status
       return 'not_found' if payment.nil?
       payment['status']
     end
 
-    def successful?
+    def success?
       return false if payment.nil?
       payment['status'] == 'paid'
     end
-
-    private
 
     def payment
       @payment ||= payments.find { |payment| payment['id'] == @payment_id }
