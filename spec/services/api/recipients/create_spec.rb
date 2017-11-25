@@ -1,13 +1,11 @@
-require 'rails_helper'
+require 'api_spec_helper'
 
 describe API::Recipients::Create do
+  include_context 'api shared bearer headers with token'
+
   subject { described_class.new(token, recipient_name) }
 
-  let(:token)          { '12345' }
   let(:recipient_name) { 'New Recipient'}
-  let(:headers) do
-    { 'Content-Type' => 'application/json', 'Authorization' => "Bearer #{token}" }
-  end
   let(:body)           { { recipient: { name: recipient_name } } }
   let(:recipient_hash) do
     { 'recipient' => { 'id' => '123', 'name' => recipient_name } }

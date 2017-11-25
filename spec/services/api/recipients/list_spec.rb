@@ -1,12 +1,9 @@
-require 'rails_helper'
+require 'api_spec_helper'
 
 describe API::Recipients::List do
+  include_context 'api shared bearer headers with token'
   subject { described_class.new(token) }
 
-  let(:token) { '12345' }
-  let(:headers) do
-    { 'Content-Type' => 'application/json', 'Authorization' => "Bearer #{token}" }
-  end
   let(:request_params) do
     [CoolpayClient.recipients_url, headers: headers]
   end
