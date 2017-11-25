@@ -10,7 +10,7 @@ class Api::V1::PaymentsController < ApplicationController
   end
 
   def verify
-    response = API::Payments::Verify.new(coolpay_token, payment_params.to_h).call
+    response = API::Payments::Verify.new(coolpay_token, params[:id]).call
     render json: response.to_json, status: 200
   end
 
@@ -31,5 +31,9 @@ class Api::V1::PaymentsController < ApplicationController
 
   def payment_params
     @payment_params ||= PaymentParams.new(params)
+  end
+
+  def render_404
+    render json: { error: 'not found' }, status: 404
   end
 end
