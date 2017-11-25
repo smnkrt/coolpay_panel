@@ -166,5 +166,8 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   sqlite3
 
+RUBY VERSION
+   ruby 2.4.2p198
+
 BUNDLED WITH
    1.16.0
