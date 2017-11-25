@@ -22,10 +22,7 @@ module API::Recipients
     end
 
     def headers
-      {
-        'Content-Type' => 'application/json',
-        'Authorization' => "Bearer #{@token}"
-      }
+      API::Headers::Bearer.new(@token).to_h
     end
   end
 end
