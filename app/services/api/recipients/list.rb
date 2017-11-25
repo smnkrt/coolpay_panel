@@ -1,7 +1,7 @@
 require 'httparty'
 
 module API::Recipients
-  # INFO: performs a fetch recipients request to Coolpay API
+  # INFO: performs a list recipients request to Coolpay API
   #       and returns an Array of recipient data hashes
   class List
     def initialize(token)
