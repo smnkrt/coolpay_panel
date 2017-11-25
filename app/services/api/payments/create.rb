@@ -4,6 +4,8 @@ module API::Payments
   # INFO: performs a create payment request to Coolpay API
   #       and returns resource with Coolpay ID
   class Create
+    class RecipientDoesNotExist < RuntimeError; end
+
     def initialize(token, payment_data)
       @token         = token
       @recipient_id  = payment_data.fetch(:recipient_id)
@@ -12,13 +14,18 @@ module API::Payments
     end
 
     def call
-      JSON.parse(crate_payment_response.body)['payment']
+      raise RecipientDoesNotExist if recipient_missing?
+      JSON.parse(response.body)['payment']
     end
 
     private
 
-    def crate_payment_response
-      HTTParty.post(
+    def recipient_missing?
+      response.code == 422
+    end
+
+    def response
+      @response ||= HTTParty.post(
         CoolpayClient.payments_url,
         body:    body.to_json,
         headers: headers

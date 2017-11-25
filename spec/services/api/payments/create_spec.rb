@@ -24,8 +24,9 @@ describe API::Payments::Create do
   end
 
   let(:httparty_response) do
-    instance_double('HTTParty::Response', body: payment_hash.to_json)
+    instance_double('HTTParty::Response', body: payment_hash.to_json, code: code)
   end
+  let(:code) { 200 }
 
   before do
     allow(HTTParty)
@@ -39,7 +40,16 @@ describe API::Payments::Create do
     subject.call
   end
 
-  it 'returns a token parsed from API response' do
-    expect(subject.call).to eq(payment_hash[:payment])
+  context 'response code 200' do
+    it 'returns a token parsed from API response' do
+      expect(subject.call).to eq(payment_hash[:payment])
+    end
+  end
+
+  context 'response code 422' do
+    let(:code) { 422 }
+    it 'raises RecipientDoesNotExist error' do
+      expect { subject.call }.to raise_error(API::Payments::Create::RecipientDoesNotExist)
+    end
   end
 end
