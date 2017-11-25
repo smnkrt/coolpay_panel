@@ -26,7 +26,7 @@ describe API::Recipients::List do
     subject.call
   end
 
-  it 'returns a token parsed from API response' do
+  it 'returns a parsed array of recipient hashes' do
     expect(subject.call).to eq(recipient_hash[:recipients])
   end
 end
