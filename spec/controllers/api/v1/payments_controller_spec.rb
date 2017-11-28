@@ -1,44 +1,24 @@
-require 'rails_helper'
+require 'controller_spec_helper'
 
 describe Api::V1::PaymentsController, type: :controller do
-  # TODO: application controller auth shared specs
-  # TODO: shared specs to extract common spec logic and improve readability
-
-  let(:token)  { Rails.application.secrets.api_access_token }
   let(:params) { { token: token } }
-  let(:coolpay_token) { 'coolpay_token' }
 
   let(:sample_response)    { { date: 'somedata' } }
   let(:unprocessable_json) { { error: 'unprocessable entity' }.to_json }
 
-  before do
-    allow_any_instance_of(API::Login).to receive(:call) { coolpay_token }
-  end
+  include_context 'api valid authorization'
 
   describe 'GET #list' do
-    let(:api_payments_list) do
-      instance_double(API::Payments::List, call: sample_response)
-    end
-
-    before do
-      allow(API::Payments::List).to receive(:new) { api_payments_list }
-    end
-
     subject { get :list, params: params }
 
-    it 'returns http success' do
-      subject
-      expect(response).to have_http_status(:success)
+    context 'with invalid token' do
+      let(:token) { 'invalid_token' }
+      it_behaves_like '404 with invalid token'
     end
 
-    it 'calls API::Payments::List service and returns result' do
-      expect(API::Payments::List)
-        .to receive(:new)
-          .with(coolpay_token) { api_payments_list }
-      expect(api_payments_list).to receive(:call)
-
-      subject
-      expect(response.body).to eq(sample_response.to_json)
+    context 'with valid token' do
+      let(:list_service_class) { API::Payments::List }
+      it_behaves_like 'list operation'
     end
   end
 
