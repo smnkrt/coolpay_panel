@@ -58,7 +58,7 @@ describe Api::V1::PaymentsController, type: :controller do
       let(:params) { { token: token, recipient_id: recipient_id, amount: amount } }
       let(:payment_params) { PaymentParams.new(params) }
 
-      context 'valid recipiend_id' do
+      context 'valid recipient_id' do
         it 'returns http created' do
           subject
           expect(response).to have_http_status(:created)
