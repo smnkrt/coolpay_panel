@@ -1,24 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+Basic POC web app enabling covering basic communication with Coolpay api.
 
 * Ruby version
-
-* System dependencies
+  `2.4.2`
 
 * Configuration
-
-* Database creation
-
-* Database initialization
+ `bundle install`
+ 
+* Database creation/Database initialization
+  not yet
 
 * How to run the test suite
+  `rspec`
 
 * Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  For now just a default Rails cache store used.
