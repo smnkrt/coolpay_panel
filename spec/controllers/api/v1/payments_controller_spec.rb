@@ -34,8 +34,9 @@ describe Api::V1::PaymentsController, type: :controller do
     end
 
     context 'invalid payment params' do
-      before do
-
+      context 'with invalid token' do
+        let(:token) { 'invalid_token' }
+        it_behaves_like '404 with invalid token'
       end
 
       it 'returns http unprocessable entity' do
@@ -92,6 +93,11 @@ describe Api::V1::PaymentsController, type: :controller do
   describe 'GET #verify' do
     subject { get :verify, params: params }
     let(:params) { { token: token } }
+
+    context 'with invalid token' do
+      let(:token) { 'invalid_token' }
+      it_behaves_like '404 with invalid token'
+    end
 
     context 'payment id missing' do
       it 'returns http unprocessable entity' do

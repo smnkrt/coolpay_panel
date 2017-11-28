@@ -32,6 +32,11 @@ describe Api::V1::RecipientsController, type: :controller do
       allow(API::Recipients::Create).to receive(:new) { api_recipients_create }
     end
 
+    context 'with invalid token' do
+      let(:token) { 'invalid_token' }
+      it_behaves_like '404 with invalid token'
+    end
+
     context 'recipient name missing' do
       it 'returns http unprocessable entity' do
         subject
